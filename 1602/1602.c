@@ -1,20 +1,6 @@
-#include <reg52.h>
+#include "CONFIG.H"
 
-#define LCD1602_DB  P0
-sbit LCD1602_RS = P1^0;
-sbit LCD1602_RW = P1^1;
-sbit LCD1602_E = P1^5;
-void InitLcd1602();
-void LcdShowStr(unsigned char x, unsigned char y, unsigned char *str);
-void main()
-{
-	unsigned char str[] = "sdu";
 
-	InitLcd1602();
-	LcdShowStr(2, 0, str);
-	LcdShowStr(0, 1, "sdu");
-	while(1);		
-}
 
 void LcdWaitReady()
 {
