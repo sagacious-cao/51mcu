@@ -1,5 +1,5 @@
 /****
-	*¾§Õñ11.0592M
+	*æ™¶æŒ¯11.0592M
 	*
 	****/
 #include<stc15.h>
@@ -8,9 +8,9 @@
 #define uint  unsigned int
 #define ulong unsigned long
 
-sbit Trig  = P1^0; //²úÉúÂö³åÒı½Å
-sbit Echo  = P3^2; //»Ø²¨Òı½Å
-sbit test  = P1^1; //²âÊÔÓÃÒı½Å
+sbit Trig  = P1^0; //äº§ç”Ÿè„‰å†²å¼•è„š
+sbit Echo  = P3^2; //å›æ³¢å¼•è„š
+sbit test  = P1^1; //æµ‹è¯•ç”¨å¼•è„š
 
 uchar outcomeH = 0x00;
 uchar outcomeL = 0x00;
@@ -26,16 +26,16 @@ void Delay15us()
 uint getDistance(uchar h, uchar l)
 {
 	uint distance_data = 0;
-	distance_data=h;                //²âÁ¿½á¹ûµÄ¸ß8Î»
-    distance_data<<=8;                   //·ÅÈë16Î»µÄ¸ß8Î»
-	distance_data=distance_data|l;//ÓëµÍ8Î»ºÏ²¢³ÉÎª16Î»½á¹ûÊı¾İ
-    distance_data/=58; 					//µ¥Î»Îªcm
+	distance_data=h;                //æµ‹é‡ç»“æœçš„é«˜8ä½
+    distance_data<<=8;                   //æ”¾å…¥16ä½çš„é«˜8ä½
+	distance_data=distance_data|l;//ä¸ä½8ä½åˆå¹¶æˆä¸º16ä½ç»“æœæ•°æ®
+    distance_data/=58; 					//å•ä½ä¸ºcm
 	return distance_data;	
 }
 void Int0_Isr() interrupt 0
 {
-	outcomeH =TH1;    //È¡³ö¶¨Ê±Æ÷µÄÖµ
-    outcomeL =TL1;    //È¡³ö¶¨Ê±Æ÷µÄÖµ
+	outcomeH =TH1;    //å–å‡ºå®šæ—¶å™¨çš„å€¼
+    outcomeL =TL1;    //å–å‡ºå®šæ—¶å™¨çš„å€¼
     EX0=0; 
 }
 
@@ -45,15 +45,15 @@ void main()
 {
 	uint distance;
    	Trig = 0;
-	AUXR |= 0x80;	//¶¨Ê±Æ÷Ê±ÖÓ1TÄ£Ê½
-	TMOD &= 0xF0;	//ÉèÖÃ¶¨Ê±Æ÷Ä£Ê½
-	TL0 = 0x00;		//ÉèÖÃ¶¨Ê±³õÖµ
-	TH0 = 0x00;		//ÉèÖÃ¶¨Ê±³õÖµ
-	TF0 = 0;		//Çå³ıTF0±êÖ¾
-	TR0 = 0;		//¶¨Ê±Æ÷0²»¼ÆÊ±
-	IT0=0;        //ÓÉ¸ßµçÆ½±äµÍµçÆ½£¬´¥·¢Íâ²¿ÖĞ¶Ï
-	EX0=0;        //¹Ø±ÕÍâ²¿ÖĞ¶Ï
-	EA=1;         //´ò¿ª×ÜÖĞ¶Ï0
+	AUXR |= 0x80;	//å®šæ—¶å™¨æ—¶é’Ÿ1Tæ¨¡å¼
+	TMOD &= 0xF0;	//è®¾ç½®å®šæ—¶å™¨æ¨¡å¼
+	TL0 = 0x00;		//è®¾ç½®å®šæ—¶åˆå€¼
+	TH0 = 0x00;		//è®¾ç½®å®šæ—¶åˆå€¼
+	TF0 = 0;		//æ¸…é™¤TF0æ ‡å¿—
+	TR0 = 0;		//å®šæ—¶å™¨0ä¸è®¡æ—¶
+	IT0=0;        //ç”±é«˜ç”µå¹³å˜ä½ç”µå¹³ï¼Œè§¦å‘å¤–éƒ¨ä¸­æ–­
+	EX0=0;        //å…³é—­å¤–éƒ¨ä¸­æ–­
+	EA=1;         //æ‰“å¼€æ€»ä¸­æ–­0
 
 	while(1)
 	{
@@ -62,13 +62,13 @@ void main()
 		distance = getDistance(outcomeH,outcomeL);
 	    Trig=1;
        	Delay15us();
-        Trig=0;         //²úÉúÒ»¸ö15usµÄÂö³å£¬ÔÚTrigÒı½Å  
-        while(Echo==0); //µÈ´ıEcho»Ø²¨Òı½Å±ä¸ßµçÆ½
-	    EX0=1;          //´ò¿ªÍâ²¿ÖĞ¶Ï
-	 	TH1=0;          //¶¨Ê±Æ÷1ÇåÁã
-        TL1=0;          //¶¨Ê±Æ÷1ÇåÁã
+        Trig=0;         //äº§ç”Ÿä¸€ä¸ª15usçš„è„‰å†²ï¼Œåœ¨Trigå¼•è„š  
+        while(Echo==0); //ç­‰å¾…Echoå›æ³¢å¼•è„šå˜é«˜ç”µå¹³
+	    EX0=1;          //æ‰“å¼€å¤–éƒ¨ä¸­æ–­
+	 	TH1=0;          //å®šæ—¶å™¨1æ¸…é›¶
+        TL1=0;          //å®šæ—¶å™¨1æ¸…é›¶
 	    TF1=0;          //
-        TR1=0;          //Æô¶¯¶¨Ê±Æ÷0
+        TR1=0;          //å¯åŠ¨å®šæ—¶å™¨0
    		EA=1;
 	}
 }
